@@ -5,6 +5,9 @@
 [![npm package](https://img.shields.io/npm/v/react-grid-layout.svg?style=flat-square)](https://www.npmjs.org/package/react-grid-layout)
 [![npm downloads](https://img.shields.io/npm/dt/react-grid-layout.svg?maxAge=2592000)]()
 
+### **This fork is a RGL with fixed draggable**
+<br>
+
 React-Grid-Layout is a grid layout system much like [Packery](http://packery.metafizzy.co/) or
 [Gridster](http://dsmorse.github.io/gridster.js/), for React.
 

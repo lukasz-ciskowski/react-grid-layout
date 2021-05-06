@@ -16,10 +16,11 @@ import {
   moveElement,
   noop,
   synchronizeLayoutWithChildren,
-  withLayoutItem
+  withLayoutItem,
+  sortLayoutItems
 } from "./utils";
 
-import { calcXY } from "./calculateUtils";
+import { calcXY, calcGridColWidth } from "./calculateUtils";
 
 import GridItem from "./GridItem";
 import ReactGridLayoutPropTypes from "./ReactGridLayoutPropTypes";
@@ -619,23 +620,32 @@ export default class ReactGridLayout extends React.Component<Props, State> {
       rowHeight,
       maxRows,
       width,
-      containerPadding
+      containerPadding,
+      draggableInitialPosition = {
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0
+      }
     } = this.props;
+
+    const positionParams: PositionParams = {
+      cols,
+      margin,
+      maxRows,
+      rowHeight,
+      containerWidth: width,
+      containerPadding: containerPadding || margin
+    };
+    const colWidth = calcGridColWidth(positionParams);
     const { layout } = this.state;
     // This is relative to the DOM element that this event fired for.
     const { layerX, layerY } = e.nativeEvent;
-    const droppingPosition = { left: layerX, top: layerY, e };
+    const offsetX = draggableInitialPosition.x + (colWidth * droppingItem.w - 170)
+    const offsetH = draggableInitialPosition.y + (rowHeight * droppingItem.h - 60)
+    const droppingPosition = { left: layerX - offsetX, top: layerY - offsetH, e };
 
     if (!this.state.droppingDOMNode) {
-      const positionParams: PositionParams = {
-        cols,
-        margin,
-        maxRows,
-        rowHeight,
-        containerWidth: width,
-        containerPadding: containerPadding || margin
-      };
-
       const calculatedPosition = calcXY(
         positionParams,
         layerY,
@@ -643,6 +653,9 @@ export default class ReactGridLayout extends React.Component<Props, State> {
         droppingItem.w,
         droppingItem.h
       );
+      const sorted = sortLayoutItems(layout, compactType);
+      const collisions = getAllCollisions(sorted, calculatedPosition);
+      if (collisions.length > 0) return
 
       this.setState({
         droppingDOMNode: <div key={droppingItem.i} />,
