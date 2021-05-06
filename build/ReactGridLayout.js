@@ -149,24 +149,13 @@ var ReactGridLayout = /*#__PURE__*/function (_React$Component) {
         w: 0,
         h: 0
       } : _this$props$draggable;
-      var positionParams
-      /*: PositionParams*/
-      = {
-        cols: cols,
-        margin: margin,
-        maxRows: maxRows,
-        rowHeight: rowHeight,
-        containerWidth: width,
-        containerPadding: containerPadding || margin
-      };
-      var colWidth = (0, _calculateUtils.calcGridColWidth)(positionParams);
       var layout = _this.state.layout; // This is relative to the DOM element that this event fired for.
 
       var _e$nativeEvent = e.nativeEvent,
           layerX = _e$nativeEvent.layerX,
           layerY = _e$nativeEvent.layerY;
-      var offsetX = draggableInitialPosition.x + (colWidth * droppingItem.w - draggableInitialPosition.w);
-      var offsetH = draggableInitialPosition.y + (rowHeight * droppingItem.h - draggableInitialPosition.h);
+      var offsetX = draggableInitialPosition.x;
+      var offsetH = draggableInitialPosition.y;
       var droppingPosition = {
         left: layerX - offsetX,
         top: layerY - offsetH,
@@ -174,6 +163,16 @@ var ReactGridLayout = /*#__PURE__*/function (_React$Component) {
       };
 
       if (!_this.state.droppingDOMNode) {
+        var positionParams
+        /*: PositionParams*/
+        = {
+          cols: cols,
+          margin: margin,
+          maxRows: maxRows,
+          rowHeight: rowHeight,
+          containerWidth: width,
+          containerPadding: containerPadding || margin
+        };
         var calculatedPosition = (0, _calculateUtils.calcXY)(positionParams, layerY, layerX, droppingItem.w, droppingItem.h);
         var sorted = (0, _utils.sortLayoutItems)(layout, _utils.compactType);
         var collisions = (0, _utils.getAllCollisions)(sorted, calculatedPosition);

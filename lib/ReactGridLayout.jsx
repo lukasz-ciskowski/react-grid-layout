@@ -20,7 +20,7 @@ import {
   sortLayoutItems
 } from "./utils";
 
-import { calcXY, calcGridColWidth } from "./calculateUtils";
+import { calcXY } from "./calculateUtils";
 
 import GridItem from "./GridItem";
 import ReactGridLayoutPropTypes from "./ReactGridLayoutPropTypes";
@@ -629,23 +629,23 @@ export default class ReactGridLayout extends React.Component<Props, State> {
       }
     } = this.props;
 
-    const positionParams: PositionParams = {
-      cols,
-      margin,
-      maxRows,
-      rowHeight,
-      containerWidth: width,
-      containerPadding: containerPadding || margin
-    };
-    const colWidth = calcGridColWidth(positionParams);
     const { layout } = this.state;
     // This is relative to the DOM element that this event fired for.
     const { layerX, layerY } = e.nativeEvent;
-    const offsetX = draggableInitialPosition.x + (colWidth * droppingItem.w - draggableInitialPosition.w)
-    const offsetH = draggableInitialPosition.y + (rowHeight * droppingItem.h - draggableInitialPosition.h)
+    const offsetX = draggableInitialPosition.x
+    const offsetH = draggableInitialPosition.y
     const droppingPosition = { left: layerX - offsetX, top: layerY - offsetH, e };
 
     if (!this.state.droppingDOMNode) {
+      const positionParams: PositionParams = {
+        cols,
+        margin,
+        maxRows,
+        rowHeight,
+        containerWidth: width,
+        containerPadding: containerPadding || margin
+      };
+
       const calculatedPosition = calcXY(
         positionParams,
         layerY,
