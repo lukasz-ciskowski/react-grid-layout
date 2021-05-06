@@ -1,5 +1,10 @@
 # Changelog
 
+1.2.41 (May 6, 2021)
+---
+
+*This version fixes minor bugs in draggable functionality related to dragged element position*
+
 1.2.4 (Mar 18, 2021)
 ---
 
