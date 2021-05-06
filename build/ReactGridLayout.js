@@ -165,8 +165,8 @@ var ReactGridLayout = /*#__PURE__*/function (_React$Component) {
       var _e$nativeEvent = e.nativeEvent,
           layerX = _e$nativeEvent.layerX,
           layerY = _e$nativeEvent.layerY;
-      var offsetX = draggableInitialPosition.x + (colWidth * droppingItem.w - 170);
-      var offsetH = draggableInitialPosition.y + (rowHeight * droppingItem.h - 60);
+      var offsetX = draggableInitialPosition.x + (colWidth * droppingItem.w - draggableInitialPosition.w);
+      var offsetH = draggableInitialPosition.y + (rowHeight * droppingItem.h - draggableInitialPosition.h);
       var droppingPosition = {
         left: layerX - offsetX,
         top: layerY - offsetH,
