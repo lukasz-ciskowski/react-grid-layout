@@ -654,7 +654,7 @@ export default class ReactGridLayout extends React.Component<Props, State> {
         droppingItem.h
       );
       const sorted = sortLayoutItems(layout, compactType);
-      const collisions = getAllCollisions(sorted, calculatedPosition);
+      const collisions = getAllCollisions(sorted, { ...calculatedPosition, ...droppingItem });
       if (collisions.length > 0) return
 
       this.setState({
